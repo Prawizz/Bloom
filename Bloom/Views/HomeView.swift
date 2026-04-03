@@ -1,0 +1,19 @@
+
+//
+//  HomeView.swift
+//  Bloom
+//
+//  Created by ปวิตร อัครวนิชกุล on 3/4/2569 BE.
+//
+
+import SwiftUI
+
+struct HomeView: View {
+    var body: some View {
+        Text("Hello Bloom 🌸")
+    }
+}
+
+#Preview {
+    HomeView()
+}
