@@ -16,9 +16,27 @@ struct MainTabView: View {
                     Text("Home")
                 }
 
-            Text("Calendar")
+            CalendarView()
                 .tabItem {
                     Image(systemName: "calendar")
+                    Text("Calendar")
+                }
+            
+            JournalView()
+                .tabItem {
+                    Image(systemName: "pencil.and.list.clipboard")
+                    Text("journal")
+                }
+            
+            AnalysisView()
+                .tabItem {
+                    Image(systemName: "chart.bar.xaxis")
+                    Text("Calendar")
+                }
+            
+            ProfileView()
+                .tabItem {
+                    Image(systemName: "person.circle")
                     Text("Calendar")
                 }
         }

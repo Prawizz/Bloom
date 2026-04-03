@@ -10,7 +10,7 @@ import SwiftUI
 
 struct HomeView: View {
     var body: some View {
-        Text("Hello Bloom 🌸")
+        Text("Hello World 🌸")
     }
 }
 
