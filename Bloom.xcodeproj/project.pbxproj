@@ -17,6 +17,8 @@
 		623BFDD72F800A0A005C83AD /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623BFDD62F800A06005C83AD /* ProfileView.swift */; };
 		623BFDD92F800B38005C83AD /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623BFDD82F800B37005C83AD /* MainTabView.swift */; };
 		623BFDE12F8058F9005C83AD /* CustomNavbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623BFDE02F8058F4005C83AD /* CustomNavbar.swift */; };
+		623BFDE32F805F4D005C83AD /* MoodEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623BFDE22F805F45005C83AD /* MoodEntry.swift */; };
+		623BFDE52F805F6F005C83AD /* MoodViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623BFDE42F805F65005C83AD /* MoodViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +52,9 @@
 		623BFDD62F800A06005C83AD /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		623BFDD82F800B37005C83AD /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		623BFDE02F8058F4005C83AD /* CustomNavbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavbar.swift; sourceTree = "<group>"; };
+		623BFDE22F805F45005C83AD /* MoodEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodEntry.swift; sourceTree = "<group>"; };
+		623BFDE42F805F65005C83AD /* MoodViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodViewModel.swift; sourceTree = "<group>"; };
+		623BFDEC2F80610C005C83AD /* Bloom.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bloom.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -121,6 +126,7 @@
 		623BFDC42F8008FF005C83AD /* Bloom */ = {
 			isa = PBXGroup;
 			children = (
+				623BFDEC2F80610C005C83AD /* Bloom.entitlements */,
 				623BFDC92F800905005C83AD /* Models */,
 				623BFDCA2F800969005C83AD /* ViewsModels */,
 				623BFDCB2F800974005C83AD /* Views */,
@@ -136,6 +142,7 @@
 		623BFDC92F800905005C83AD /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				623BFDE22F805F45005C83AD /* MoodEntry.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -143,6 +150,7 @@
 		623BFDCA2F800969005C83AD /* ViewsModels */ = {
 			isa = PBXGroup;
 			children = (
+				623BFDE42F805F65005C83AD /* MoodViewModel.swift */,
 			);
 			path = ViewsModels;
 			sourceTree = "<group>";
@@ -323,9 +331,11 @@
 				623BFDE12F8058F9005C83AD /* CustomNavbar.swift in Sources */,
 				623BFDD32F8009F8005C83AD /* JournalView.swift in Sources */,
 				623BFDD92F800B38005C83AD /* MainTabView.swift in Sources */,
+				623BFDE32F805F4D005C83AD /* MoodEntry.swift in Sources */,
 				623BFDD72F800A0A005C83AD /* ProfileView.swift in Sources */,
 				623BFDCF2F8009DC005C83AD /* HomeView.swift in Sources */,
 				623BFDD12F8009EF005C83AD /* CalendarView.swift in Sources */,
+				623BFDE52F805F6F005C83AD /* MoodViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -483,9 +493,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Bloom/Bloom.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Bloom/Preview Content\"";
+				DEVELOPMENT_TEAM = JAU2HZU8A4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -511,9 +523,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Bloom/Bloom.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Bloom/Preview Content\"";
+				DEVELOPMENT_TEAM = JAU2HZU8A4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
