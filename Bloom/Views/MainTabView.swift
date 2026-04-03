@@ -22,22 +22,22 @@ struct MainTabView: View {
                     Text("Calendar")
                 }
             
-            JournalView()
+            JournalView(entryDate: Date())
                 .tabItem {
                     Image(systemName: "pencil.and.list.clipboard")
-                    Text("journal")
+                    Text("Journal")
                 }
             
             AnalysisView()
                 .tabItem {
                     Image(systemName: "chart.bar.xaxis")
-                    Text("Calendar")
+                    Text("Analysis")
                 }
             
             ProfileView()
                 .tabItem {
                     Image(systemName: "person.circle")
-                    Text("Calendar")
+                    Text("Profile")
                 }
         }
     }
