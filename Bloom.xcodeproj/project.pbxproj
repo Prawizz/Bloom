@@ -16,6 +16,7 @@
 		623BFDD52F800A01005C83AD /* AnalysisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623BFDD42F8009FD005C83AD /* AnalysisView.swift */; };
 		623BFDD72F800A0A005C83AD /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623BFDD62F800A06005C83AD /* ProfileView.swift */; };
 		623BFDD92F800B38005C83AD /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623BFDD82F800B37005C83AD /* MainTabView.swift */; };
+		623BFDE12F8058F9005C83AD /* CustomNavbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623BFDE02F8058F4005C83AD /* CustomNavbar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		623BFDD42F8009FD005C83AD /* AnalysisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisView.swift; sourceTree = "<group>"; };
 		623BFDD62F800A06005C83AD /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		623BFDD82F800B37005C83AD /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		623BFDE02F8058F4005C83AD /* CustomNavbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavbar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -148,6 +150,7 @@
 		623BFDCB2F800974005C83AD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				623BFDE02F8058F4005C83AD /* CustomNavbar.swift */,
 				623BFDD82F800B37005C83AD /* MainTabView.swift */,
 				623BFDCE2F8009DA005C83AD /* HomeView.swift */,
 				623BFDD02F8009EB005C83AD /* CalendarView.swift */,
@@ -317,6 +320,7 @@
 			files = (
 				623BFDC52F8008FF005C83AD /* BloomApp.swift in Sources */,
 				623BFDD52F800A01005C83AD /* AnalysisView.swift in Sources */,
+				623BFDE12F8058F9005C83AD /* CustomNavbar.swift in Sources */,
 				623BFDD32F8009F8005C83AD /* JournalView.swift in Sources */,
 				623BFDD92F800B38005C83AD /* MainTabView.swift in Sources */,
 				623BFDD72F800A0A005C83AD /* ProfileView.swift in Sources */,

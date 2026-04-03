@@ -8,38 +8,37 @@
 import SwiftUI
 
 struct MainTabView: View {
+    
+    @State private var selectedTab = 0
+    
     var body: some View {
-        TabView {
-            HomeView()
-                .tabItem {
-                    Image(systemName: "house")
-                    Text("Home")
-                }
-
-            CalendarView()
-                .tabItem {
-                    Image(systemName: "calendar")
-                    Text("Calendar")
-                }
+        ZStack(alignment: .bottom) { 
             
-            JournalView(entryDate: Date())
-                .tabItem {
-                    Image(systemName: "pencil.and.list.clipboard")
-                    Text("Journal")
+            // Content
+            Group {
+                switch selectedTab {
+                case 0:
+                    HomeView()
+                case 1:
+                    CalendarView()
+                case 2:
+                    JournalView(entryDate: Date())
+                case 3:
+                    AnalysisView()
+                case 4:
+                    ProfileView()
+                default:
+                    HomeView()
                 }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             
-            AnalysisView()
-                .tabItem {
-                    Image(systemName: "chart.bar.xaxis")
-                    Text("Analysis")
-                }
-            
-            ProfileView()
-                .tabItem {
-                    Image(systemName: "person.circle")
-                    Text("Profile")
-                }
+            // 👇 Tab bar pinned to bottom
+            CustomNavBar(selectedTab: $selectedTab)
+                .padding(.horizontal)
+                .padding(.bottom, 10)
         }
+        .ignoresSafeArea(edges: .bottom)
     }
 }
 
