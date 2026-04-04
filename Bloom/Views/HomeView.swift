@@ -1,8 +1,3 @@
-//
-//  HomeView.swift
-//  Bloom
-//
-
 import SwiftUI
 
 struct HomeView: View {

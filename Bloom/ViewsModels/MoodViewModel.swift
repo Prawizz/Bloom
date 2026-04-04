@@ -1,8 +1,3 @@
-//
-//  MoodViewModel.swift
-//  Bloom
-//
-
 import Foundation
 
 class MoodViewModel: ObservableObject {

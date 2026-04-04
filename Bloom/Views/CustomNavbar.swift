@@ -1,10 +1,3 @@
-//
-//  CustomNavbar.swift
-//  Bloom
-//
-//  Created by ปวิตร อัครวนิชกุล on 4/4/2569 BE.
-//
-
 import SwiftUI
 
 struct CustomNavBar: View {

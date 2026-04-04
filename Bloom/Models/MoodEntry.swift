@@ -1,10 +1,3 @@
-//
-//  MoodEntry.swift
-//  Bloom
-//
-//  Created by ปวิตร อัครวนิชกุล on 4/4/2569 BE.
-//
-
 import Foundation
 
 struct MoodEntry: Identifiable, Codable {
