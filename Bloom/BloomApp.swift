@@ -19,6 +19,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct BloomApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @StateObject private var journalViewModel = JournalViewModel()
     
     init() {
         let appearance = UITabBarAppearance()
@@ -49,6 +50,7 @@ struct BloomApp: App {
     var body: some Scene {
         WindowGroup {
             LoginView()
+                .environmentObject(journalViewModel)
         }
     }
 }

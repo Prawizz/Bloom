@@ -3,6 +3,7 @@ import SwiftUI
 struct CalendarView: View {
     @State private var currentMonth: Int
     @State private var currentYear: Int
+    @EnvironmentObject var journalViewModel: JournalViewModel
 
     private let calendar = Calendar.current
     private let columns = Array(repeating: GridItem(.flexible(), spacing: 8), count: 7)
@@ -33,16 +34,24 @@ struct CalendarView: View {
 
                         if let date = maybeDate {
                             NavigationLink(destination: JournalView(entryDate: date)) {
-                                Text(dayNumber(from: date))
-                                    .frame(maxWidth: .infinity, minHeight: 44)
-                                    .background(isToday(date) ? Color.blue.opacity(0.25) : Color.gray.opacity(0.1))
-                                    .foregroundColor(calendar.isDate(date, equalTo: firstOfMonth(), toGranularity: .month) ? .primary : .secondary)
-                                    .cornerRadius(8)
+                                ZStack {
+                                    Circle()
+                                        .fill(isToday(date) ? Color.blue.opacity(0.25) : Color.gray.opacity(0.1))
+                                        .frame(width: 44, height: 44)
+                                    
+                                    if let entry = journalViewModel.entry(for: date) {
+                                        Text(flowerEmoji(for: entry.flowerType, mood: entry.mood))
+                                            .font(.title)
+                                    } else {
+                                        Text(dayNumber(from: date))
+                                            .foregroundColor(calendar.isDate(date, equalTo: firstOfMonth(), toGranularity: .month) ? .primary : .secondary)
+                                    }
+                                }
                             }
                             .buttonStyle(.plain)
                         } else {
                             Color.clear
-                                .frame(maxWidth: .infinity, minHeight: 44)
+                                .frame(width: 44, height: 44)
                         }
                     }
                 }
@@ -141,7 +150,28 @@ struct CalendarView: View {
             currentMonth += 1
         }
     }
-}
+
+    private func flowerEmoji(for flowerType: String, mood: Int) -> String {
+        let baseEmoji: String
+        switch flowerType {
+        case "rose": baseEmoji = "🌹"
+        case "tulip": baseEmoji = "🌷"
+        case "sunflower": baseEmoji = "🌻"
+        case "daisy": baseEmoji = "🌼"
+        case "lily": baseEmoji = "🌸"
+        default: baseEmoji = "🌱"
+        }
+        
+        // Vary witheredness: fresh for high mood, wilted for low
+        switch mood {
+        case 5: return baseEmoji  
+        case 4: return baseEmoji
+        case 3: return "🥀" 
+        case 2: return "🥀"
+        case 1: return "🥀"
+        default: return baseEmoji
+        }
+    }
 
 #Preview {
     CalendarView()
