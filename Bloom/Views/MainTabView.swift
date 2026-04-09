@@ -6,8 +6,7 @@ struct MainTabView: View {
     
     var body: some View {
         ZStack(alignment: .bottom) { 
-            
-            // Content
+
             Group {
                 switch selectedTab {
                 case 0:
@@ -26,12 +25,10 @@ struct MainTabView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             
-            // 👇 Tab bar pinned to bottom
             CustomNavBar(selectedTab: $selectedTab)
                 .padding(.horizontal)
                 .padding(.bottom, 10)
         }
-        .ignoresSafeArea(edges: .bottom)
     }
 }
 

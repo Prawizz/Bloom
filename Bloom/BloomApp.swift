@@ -1,7 +1,24 @@
 import SwiftUI
+import Firebase
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+    
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
+    ) -> Bool {
+        
+        FirebaseApp.configure()
+        print("✅ Firebase configured")
+        
+        return true
+    }
+}
 
 @main
 struct BloomApp: App {
+    
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     init() {
         let appearance = UITabBarAppearance()
@@ -9,7 +26,6 @@ struct BloomApp: App {
         
         appearance.backgroundColor = UIColor.systemBackground
         
-        // Selected (soft pink)
         appearance.stackedLayoutAppearance.selected.iconColor = UIColor(
             red: 0.95, green: 0.6, blue: 0.7, alpha: 1
         )
@@ -19,13 +35,11 @@ struct BloomApp: App {
             )
         ]
         
-        // Unselected (soft gray)
         appearance.stackedLayoutAppearance.normal.iconColor = UIColor.gray
         appearance.stackedLayoutAppearance.normal.titleTextAttributes = [
             .foregroundColor: UIColor.gray
         ]
         
-        // subtle shadow
         appearance.shadowColor = UIColor.lightGray.withAlphaComponent(0.2)
 
         UITabBar.appearance().standardAppearance = appearance
@@ -34,8 +48,11 @@ struct BloomApp: App {
 
     var body: some Scene {
         WindowGroup {
-            MainTabView()
-                .tint(Color(red: 0.95, green: 0.6, blue: 0.7)) // 🌸 pink
+            LoginView()
         }
     }
+}
+
+#Preview{
+    LoginView()
 }
