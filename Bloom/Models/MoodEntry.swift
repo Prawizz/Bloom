@@ -15,3 +15,9 @@ struct JournalEntry: Identifiable, Codable {
         self.flowerType = flowerType
     }
 }
+
+struct MoodEntry: Identifiable, Codable {
+    var id: UUID = UUID()
+    var date: Date
+    var mood: Int
+}

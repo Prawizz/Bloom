@@ -24,6 +24,7 @@
 		623BFDF92F874BAE005C83AD /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 623BFDF82F874BAE005C83AD /* FirebaseFirestore */; };
 		623BFDFD2F8755C2005C83AD /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623BFDFC2F8755C1005C83AD /* AuthManager.swift */; };
 		623BFE002F8755EB005C83AD /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623BFDFF2F8755EB005C83AD /* LoginView.swift */; };
+		62CA94432F8A0CA900B56479 /* JournalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CA94422F8A0C9D00B56479 /* JournalViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		623BFDF32F874A2E005C83AD /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		623BFDFC2F8755C1005C83AD /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		623BFDFF2F8755EB005C83AD /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		62CA94422F8A0C9D00B56479 /* JournalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -161,6 +163,7 @@
 		623BFDCA2F800969005C83AD /* ViewsModels */ = {
 			isa = PBXGroup;
 			children = (
+				62CA94422F8A0C9D00B56479 /* JournalViewModel.swift */,
 				623BFDE42F805F65005C83AD /* MoodViewModel.swift */,
 			);
 			path = ViewsModels;
@@ -345,6 +348,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				62CA94432F8A0CA900B56479 /* JournalViewModel.swift in Sources */,
 				623BFDC52F8008FF005C83AD /* BloomApp.swift in Sources */,
 				623BFDD52F800A01005C83AD /* AnalysisView.swift in Sources */,
 				623BFDE12F8058F9005C83AD /* CustomNavbar.swift in Sources */,

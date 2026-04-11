@@ -1,49 +1,48 @@
 import Foundation
 
-class JournalViewModel: ObservableObject {
-
-    @Published var entries: [JournalEntry] = []
-
-    private let key = "saved_entries"
-
+class MoodViewModel: ObservableObject {
+    @Published var moods: [MoodEntry] = []
+    
+    private let key = "saved_moods"
+    
     init() {
-        loadEntries()
+        loadMoods()
     }
-
-    func addEntry(_ entry: JournalEntry) {
-        let day = Calendar.current.startOfDay(for: entry.date)
-
-        entries.removeAll {
-            Calendar.current.isDate($0.date, inSameDayAs: day)
-        }
-
-        entries.append(entry)
-        saveEntries()
-    }
-
-    func entry(for date: Date) -> JournalEntry? {
+    
+    func setMood(_ mood: Int, for date: Date = Date()) {
         let day = Calendar.current.startOfDay(for: date)
-        return entries.first {
+        
+        moods.removeAll {
             Calendar.current.isDate($0.date, inSameDayAs: day)
         }
+        
+        moods.append(MoodEntry(date: day, mood: mood))
+        saveMoods()
     }
-
-    func hasEntry(for date: Date) -> Bool {
-        entry(for: date) != nil
+    
+    func mood(for date: Date = Date()) -> Int? {
+        let day = Calendar.current.startOfDay(for: date)
+        return moods.first {
+            Calendar.current.isDate($0.date, inSameDayAs: day)
+        }?.mood
     }
-
-    //Save
-    private func saveEntries() {
-        if let data = try? JSONEncoder().encode(entries) {
+    
+    func hasMood(for date: Date) -> Bool {
+        mood(for: date) != nil
+    }
+    
+    // Save
+    private func saveMoods() {
+        if let data = try? JSONEncoder().encode(moods) {
             UserDefaults.standard.set(data, forKey: key)
         }
     }
-
-    //Load
-    private func loadEntries() {
+    
+    // Load
+    private func loadMoods() {
         if let data = UserDefaults.standard.data(forKey: key),
-           let decoded = try? JSONDecoder().decode([JournalEntry].self, from: data) {
-            entries = decoded
+           let decoded = try? JSONDecoder().decode([MoodEntry].self, from: data) {
+            moods = decoded
         }
     }
 }

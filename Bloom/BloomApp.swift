@@ -9,7 +9,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     ) -> Bool {
         
         FirebaseApp.configure()
-        print("✅ Firebase configured")
         
         return true
     }
