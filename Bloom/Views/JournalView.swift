@@ -4,7 +4,9 @@ struct JournalView: View {
     let entryDate: Date
     @State private var notes: String = ""
     @State private var flowerType: String = "rose"
-    @State private var mood: Int = 3 
+    @State private var mood: Int = 3
+    @State private var sleepHours: Double = 8.0
+    @State private var steps: Int = 0
     @EnvironmentObject var journalViewModel: JournalViewModel
 
     private let flowerOptions = ["rose", "tulip", "sunflower", "daisy", "lily"]
@@ -26,27 +28,44 @@ struct JournalView: View {
                     }
                 }
                 .pickerStyle(.menu)
+            }
 
-                // Mood Selection: 5 flowers on witheredness scale
-                Section(header: Text("How are you feeling? (1-5)")) {
-                    HStack(spacing: 10) {
-                        ForEach(1...5, id: \.self) { level in
-                            Button(action: { mood = level }) {
-                                VStack {
-                                    Text(flowerEmoji(for: flowerType, mood: level))
-                                        .font(.largeTitle)
-                                    Text("\(level)")
-                                        .font(.caption)
-                                }
-                                .padding()
-                                .background(mood == level ? Color.blue.opacity(0.2) : Color.clear)
-                                .cornerRadius(8)
+            Section(header: Text("How are you feeling? (1-5)")) {
+                HStack(spacing: 10) {
+                    ForEach(1...5, id: \.self) { level in
+                        Button(action: { mood = level }) {
+                            VStack {
+                                Text(flowerEmoji(for: flowerType, mood: level))
+                                    .font(.largeTitle)
+                                Text("\(level)")
+                                    .font(.caption)
                             }
+                            .padding()
+                            .background(mood == level ? Color.blue.opacity(0.2) : Color.clear)
+                            .cornerRadius(8)
                         }
                     }
                 }
+            }
 
-                // Notes
+            Section(header: Text("Sleep & Activity")) {
+                Stepper(value: $sleepHours, in: 0...16, step: 0.25) {
+                    HStack {
+                        Text("Sleep")
+                        Spacer()
+                        Text("\(sleepHours, specifier: "%.2f") hrs")
+                    }
+                }
+                Stepper(value: $steps, in: 0...50000, step: 250) {
+                    HStack {
+                        Text("Steps")
+                        Spacer()
+                        Text("\(steps)")
+                    }
+                }
+            }
+
+            Section(header: Text("Notes")) {
                 TextEditor(text: $notes)
                     .frame(minHeight: 150)
                     .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.secondary.opacity(0.3)))
@@ -69,6 +88,8 @@ struct JournalView: View {
                 notes = existingEntry.notes
                 flowerType = existingEntry.flowerType
                 mood = existingEntry.mood
+                sleepHours = existingEntry.sleepHours
+                steps = existingEntry.steps
             }
         }
     }
@@ -96,7 +117,14 @@ struct JournalView: View {
     }
 
     private func saveEntry() {
-        let entry = JournalEntry(date: entryDate, mood: mood, notes: notes, flowerType: flowerType)
+        let entry = JournalEntry(
+            date: entryDate,
+            mood: mood,
+            notes: notes,
+            flowerType: flowerType,
+            sleepHours: sleepHours,
+            steps: steps
+        )
         journalViewModel.addEntry(entry)
     }
 }
