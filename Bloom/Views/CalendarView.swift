@@ -3,7 +3,7 @@ import SwiftUI
 struct CalendarView: View {
     @State private var currentMonth: Int
     @State private var currentYear: Int
-    @EnvironmentObject var journalViewModel: JournalViewModel
+    @Environment(JournalViewModel.self) var journalViewModel
     
     private let calendar = Calendar.current
     private let columns = Array(repeating: GridItem(.flexible(), spacing: 8), count: 7)
@@ -176,5 +176,5 @@ struct CalendarView: View {
 
 #Preview {
     CalendarView()
-        .environmentObject(JournalViewModel())
+        .environment(JournalViewModel())
 }

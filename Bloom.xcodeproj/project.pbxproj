@@ -25,6 +25,8 @@
 		623BFDFD2F8755C2005C83AD /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623BFDFC2F8755C1005C83AD /* AuthManager.swift */; };
 		623BFE002F8755EB005C83AD /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623BFDFF2F8755EB005C83AD /* LoginView.swift */; };
 		62CA94432F8A0CA900B56479 /* JournalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CA94422F8A0C9D00B56479 /* JournalViewModel.swift */; };
+		62CA94532F9252F800B56479 /* LLMService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CA94522F9252F000B56479 /* LLMService.swift */; };
+		62CA94552F9256AC00B56479 /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 62CA94542F9256A700B56479 /* Secrets.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +67,9 @@
 		623BFDFC2F8755C1005C83AD /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		623BFDFF2F8755EB005C83AD /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		62CA94422F8A0C9D00B56479 /* JournalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalViewModel.swift; sourceTree = "<group>"; };
+		62CA94522F9252F000B56479 /* LLMService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMService.swift; sourceTree = "<group>"; };
+		62CA94542F9256A700B56479 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		62CA94582F92586F00B56479 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -138,6 +143,8 @@
 		623BFDC42F8008FF005C83AD /* Bloom */ = {
 			isa = PBXGroup;
 			children = (
+				62CA94582F92586F00B56479 /* Info.plist */,
+				62CA94542F9256A700B56479 /* Secrets.xcconfig */,
 				623BFDEC2F80610C005C83AD /* Bloom.entitlements */,
 				623BFDC92F800905005C83AD /* Models */,
 				623BFDCA2F800969005C83AD /* ViewsModels */,
@@ -187,6 +194,7 @@
 		623BFDCC2F80097F005C83AD /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				62CA94522F9252F000B56479 /* LLMService.swift */,
 				623BFDFC2F8755C1005C83AD /* AuthManager.swift */,
 			);
 			path = Services;
@@ -321,6 +329,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				62CA94552F9256AC00B56479 /* Secrets.xcconfig in Resources */,
 				623BFDC72F8008FF005C83AD /* Preview Assets.xcassets in Resources */,
 				623BFDC82F8008FF005C83AD /* Assets.xcassets in Resources */,
 				623BFDF42F874A2E005C83AD /* GoogleService-Info.plist in Resources */,
@@ -361,6 +370,7 @@
 				623BFDFD2F8755C2005C83AD /* AuthManager.swift in Sources */,
 				623BFDD12F8009EF005C83AD /* CalendarView.swift in Sources */,
 				623BFDE52F805F6F005C83AD /* MoodViewModel.swift in Sources */,
+				62CA94532F9252F800B56479 /* LLMService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,6 +406,7 @@
 /* Begin XCBuildConfiguration section */
 		623BFD912F8004AA005C83AD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 62CA94542F9256A700B56479 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -459,6 +470,7 @@
 		};
 		623BFD922F8004AA005C83AD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 62CA94542F9256A700B56479 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -525,6 +537,9 @@
 				DEVELOPMENT_TEAM = JAU2HZU8A4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Bloom/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -555,6 +570,9 @@
 				DEVELOPMENT_TEAM = JAU2HZU8A4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Bloom/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

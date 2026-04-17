@@ -1,7 +1,9 @@
 import Foundation
+import Observation
 
-class MoodViewModel: ObservableObject {
-    @Published var moods: [MoodEntry] = []
+@Observable
+class MoodViewModel {
+    var moods: [MoodEntry] = []
     
     private let key = "saved_moods"
     
@@ -45,4 +47,13 @@ class MoodViewModel: ObservableObject {
             moods = decoded
         }
     }
+    
+    var sortedMoods: [MoodEntry] {
+        moods.sorted { $0.date < $1.date }
+    }
+
+    var recentMoods: [MoodEntry] {
+        Array(sortedMoods.suffix(7))
+    }
 }
+

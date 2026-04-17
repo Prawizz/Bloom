@@ -1,6 +1,8 @@
 import SwiftUI
 import Firebase
+import Observation
 
+// ✅ Firebase setup
 class AppDelegate: NSObject, UIApplicationDelegate {
     
     func application(
@@ -9,7 +11,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     ) -> Bool {
         
         FirebaseApp.configure()
-        
         return true
     }
 }
@@ -18,7 +19,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct BloomApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @StateObject private var journalViewModel = JournalViewModel()
+    
+    // ✅ Use @State (NOT @StateObject)
+    @State private var moodViewModel = MoodViewModel()
+    @State private var journalViewModel = JournalViewModel()
     
     init() {
         let appearance = UITabBarAppearance()
@@ -26,6 +30,7 @@ struct BloomApp: App {
         
         appearance.backgroundColor = UIColor.systemBackground
         
+        // 🌸 Selected (soft pink)
         appearance.stackedLayoutAppearance.selected.iconColor = UIColor(
             red: 0.95, green: 0.6, blue: 0.7, alpha: 1
         )
@@ -35,6 +40,7 @@ struct BloomApp: App {
             )
         ]
         
+        // ⚪ Unselected
         appearance.stackedLayoutAppearance.normal.iconColor = UIColor.gray
         appearance.stackedLayoutAppearance.normal.titleTextAttributes = [
             .foregroundColor: UIColor.gray
@@ -49,11 +55,14 @@ struct BloomApp: App {
     var body: some Scene {
         WindowGroup {
             LoginView()
-                .environmentObject(journalViewModel)
+                .environment(moodViewModel)
+                .environment(journalViewModel)
         }
     }
 }
 
-#Preview{
+#Preview {
     LoginView()
+        .environment(MoodViewModel())
+        .environment(JournalViewModel())
 }

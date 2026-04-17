@@ -7,7 +7,7 @@ struct JournalView: View {
     @State private var mood: Int = 3
     @State private var sleepHours: Double = 8.0
     @State private var steps: Int = 0
-    @EnvironmentObject var journalViewModel: JournalViewModel
+    @Environment(JournalViewModel.self) var journalViewModel
 
     private let flowerOptions = ["rose", "tulip", "sunflower", "daisy", "lily"]
 
@@ -131,4 +131,5 @@ struct JournalView: View {
 
 #Preview {
     JournalView(entryDate: Date())
+        .environment(JournalViewModel())
 }

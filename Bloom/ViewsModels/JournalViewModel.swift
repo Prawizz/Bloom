@@ -1,8 +1,10 @@
 import Foundation
+import Observation
 
-class JournalViewModel: ObservableObject {
+@Observable
+class JournalViewModel {
 
-    @Published var entries: [JournalEntry] = []
+    var entries: [JournalEntry] = []
 
     private let key = "saved_entries"
 
@@ -32,18 +34,24 @@ class JournalViewModel: ObservableObject {
         entry(for: date) != nil
     }
 
-    //Save
     private func saveEntries() {
         if let data = try? JSONEncoder().encode(entries) {
             UserDefaults.standard.set(data, forKey: key)
         }
     }
 
-    //Load
     private func loadEntries() {
         if let data = UserDefaults.standard.data(forKey: key),
            let decoded = try? JSONDecoder().decode([JournalEntry].self, from: data) {
             entries = decoded
         }
+    }
+    
+    var sortedEntries: [JournalEntry] {
+        entries.sorted { $0.date < $1.date }
+    }
+
+    var recentEntries: [JournalEntry] {
+        Array(sortedEntries.suffix(7))
     }
 }
