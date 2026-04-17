@@ -27,6 +27,7 @@
 		62CA94432F8A0CA900B56479 /* JournalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CA94422F8A0C9D00B56479 /* JournalViewModel.swift */; };
 		62CA94532F9252F800B56479 /* LLMService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CA94522F9252F000B56479 /* LLMService.swift */; };
 		62CA94552F9256AC00B56479 /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 62CA94542F9256A700B56479 /* Secrets.xcconfig */; };
+		62CA94622F92768B00B56479 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 62CA94612F92768600B56479 /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 		62CA94522F9252F000B56479 /* LLMService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMService.swift; sourceTree = "<group>"; };
 		62CA94542F9256A700B56479 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		62CA94582F92586F00B56479 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		62CA94612F92768600B56479 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -143,6 +145,7 @@
 		623BFDC42F8008FF005C83AD /* Bloom */ = {
 			isa = PBXGroup;
 			children = (
+				62CA94612F92768600B56479 /* .gitignore */,
 				62CA94582F92586F00B56479 /* Info.plist */,
 				62CA94542F9256A700B56479 /* Secrets.xcconfig */,
 				623BFDEC2F80610C005C83AD /* Bloom.entitlements */,
@@ -329,6 +332,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				62CA94622F92768B00B56479 /* .gitignore in Resources */,
 				62CA94552F9256AC00B56479 /* Secrets.xcconfig in Resources */,
 				623BFDC72F8008FF005C83AD /* Preview Assets.xcassets in Resources */,
 				623BFDC82F8008FF005C83AD /* Assets.xcassets in Resources */,
