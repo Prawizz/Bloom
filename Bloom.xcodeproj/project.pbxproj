@@ -28,6 +28,7 @@
 		62CA94532F9252F800B56479 /* LLMService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CA94522F9252F000B56479 /* LLMService.swift */; };
 		62CA94552F9256AC00B56479 /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 62CA94542F9256A700B56479 /* Secrets.xcconfig */; };
 		62CA94622F92768B00B56479 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 62CA94612F92768600B56479 /* .gitignore */; };
+		62CA94732F93762700B56479 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CA94722F93762300B56479 /* EditProfileView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 		62CA94542F9256A700B56479 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		62CA94582F92586F00B56479 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		62CA94612F92768600B56479 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		62CA94722F93762300B56479 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -182,6 +184,7 @@
 		623BFDCB2F800974005C83AD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				62CA94722F93762300B56479 /* EditProfileView.swift */,
 				623BFDFF2F8755EB005C83AD /* LoginView.swift */,
 				623BFDE02F8058F4005C83AD /* CustomNavbar.swift */,
 				623BFDD82F800B37005C83AD /* MainTabView.swift */,
@@ -361,6 +364,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				62CA94732F93762700B56479 /* EditProfileView.swift in Sources */,
 				62CA94432F8A0CA900B56479 /* JournalViewModel.swift in Sources */,
 				623BFDC52F8008FF005C83AD /* BloomApp.swift in Sources */,
 				623BFDD52F800A01005C83AD /* AnalysisView.swift in Sources */,
