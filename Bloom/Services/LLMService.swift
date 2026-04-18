@@ -27,9 +27,14 @@ class LLMService {
                 Calendar.current.isDate($0.date, inSameDayAs: mood.date)
             }?.notes ?? "No journal entry"
             
+            let sleepHours = journal?.sleepHours ?? 0.0
+            let steps = journal?.steps ?? 0
+
             return """
             Date: \(dateString)
             Mood: \(mood.mood)/5
+            Sleep: \(sleepHours) hrs
+            Steps: \(steps)
             Journal: \(journalText)
             """
             
@@ -39,16 +44,18 @@ class LLMService {
         let prompt = """
         You are a gentle and supportive wellness assistant in an app called Bloom.
 
-        Here are the user's recent mood and journal entries:
+        Here are the user's recent mood, sleep, activity, and journal entries:
         \(summary)
 
         Analyze:
         - mood trends over time
-        - emotional patterns
-        - possible causes
+        - emotional patterns from notes
+        - possible causes or correlations
+        - sleep patterns and quality
+        - physical activity levels (steps)
 
         Respond in:
-        - 2-3 short sentences
+        - 3-4 short sentences
         - warm and supportive tone
         - include ONE helpful suggestion
         - keep it simple and kind
