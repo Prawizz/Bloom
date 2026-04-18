@@ -4,7 +4,7 @@ import FirebaseAuth
 struct EditProfileView: View {
     @State private var displayName: String = ""
     @State private var isLoading = false
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         Form {
@@ -43,7 +43,7 @@ struct EditProfileView: View {
             if let error = error {
                 print("Error updating profile: \(error.localizedDescription)")
             } else {
-                presentationMode.wrappedValue.dismiss()
+                dismiss()
             }
         }
     }
