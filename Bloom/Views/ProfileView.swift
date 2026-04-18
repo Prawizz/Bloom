@@ -2,10 +2,10 @@ import SwiftUI
 import FirebaseAuth
 
 struct ProfileView: View {
-    @State private var user = Auth.auth().currentUser
+    @State private var user: User? = Auth.auth().currentUser
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 20) {
                 Text("Profile")
                     .font(.largeTitle)
@@ -70,6 +70,9 @@ struct ProfileView: View {
             .padding()
             .navigationTitle("")
             .navigationBarHidden(true)
+            .onAppear {
+                user = Auth.auth().currentUser
+            }
         }
     }
     
