@@ -48,20 +48,24 @@ struct AnalysisView: View {
     
     func generateAnalysis() {
         isLoading = true
-        
+        analysis = ""
+
         Task {
             do {
                 let result = try await LLMService.shared.analyze(
                     moods: moodViewModel.recentMoods,
                     journals: journalViewModel.recentEntries
                 )
-                
-                analysis = result
+                await MainActor.run {
+                    analysis = result
+                    isLoading = false
+                }
             } catch {
-                analysis = "Failed to analyze. Try again."
+                await MainActor.run {
+                    analysis = "Failed to analyze. Please try again."
+                    isLoading = false
+                }
             }
-            
-            isLoading = false
         }
     }
 }
