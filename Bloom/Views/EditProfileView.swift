@@ -49,8 +49,4 @@ struct EditProfileView: View {
     }
 }
 
-#Preview {
-    NavigationView {
-        EditProfileView()
-    }
-}
+
