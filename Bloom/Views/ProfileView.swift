@@ -2,6 +2,7 @@ import SwiftUI
 import FirebaseAuth
 
 struct ProfileView: View {
+    var onSignOut: () -> Void = {}
     @State private var user: User? = Auth.auth().currentUser
     
     var body: some View {
@@ -78,7 +79,7 @@ struct ProfileView: View {
     
     private func signOut() {
         AuthManager.shared.signOut()
-        // Note: You might need to handle navigation back to LoginView in your app's root
+        onSignOut()
     }
 }
 

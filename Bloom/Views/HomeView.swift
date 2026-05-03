@@ -2,7 +2,7 @@ import SwiftUI
 
 struct HomeView: View {
 
-    @State var vm = MoodViewModel()
+    @Environment(MoodViewModel.self) var vm
     @State private var selectedDate = Date()
     @State private var showCalendar = false
 

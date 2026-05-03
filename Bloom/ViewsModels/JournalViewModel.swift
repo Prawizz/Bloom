@@ -6,6 +6,7 @@ import FirebaseAuth
 @Observable
 class JournalViewModel {
     var entries: [JournalEntry] = []
+    private var listener: ListenerRegistration?
 
     private var userID: String? {
         Auth.auth().currentUser?.uid
@@ -20,14 +21,19 @@ class JournalViewModel {
         loadEntries()
     }
 
+    deinit {
+        listener?.remove()
+    }
+
     func loadEntries() {
         guard let uid = userID else { return }
+        listener?.remove()
 
-        Firestore.firestore().collection("users").document(uid).collection("journals")
+        listener = Firestore.firestore().collection("users").document(uid).collection("journals")
             .order(by: "date", descending: true)
-            .addSnapshotListener { snapshot, error in
+            .addSnapshotListener { [weak self] snapshot, error in
                 guard let docs = snapshot?.documents else { return }
-                self.entries = docs.compactMap { try? $0.data(as: JournalEntry.self) }
+                self?.entries = docs.compactMap { try? $0.data(as: JournalEntry.self) }
             }
     }
 

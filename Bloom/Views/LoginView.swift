@@ -66,7 +66,7 @@ struct LoginView: View {
         }
         .padding()
         .fullScreenCover(isPresented: $isAuthenticated) {
-            MainTabView()
+            MainTabView(onSignOut: { isAuthenticated = false })
         }
     }
     

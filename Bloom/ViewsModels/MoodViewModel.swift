@@ -6,6 +6,7 @@ import FirebaseAuth
 @Observable
 class MoodViewModel {
     var moods: [MoodEntry] = []
+    private var listener: ListenerRegistration?
 
     private var userID: String? {
         Auth.auth().currentUser?.uid
@@ -20,15 +21,19 @@ class MoodViewModel {
         loadMoods()
     }
 
+    deinit {
+        listener?.remove()
+    }
+
     func loadMoods() {
         guard let uid = userID else { return }
+        listener?.remove()
 
-        // ✅ Call Firestore.firestore() here, not as a property
-        Firestore.firestore().collection("users").document(uid).collection("moods")
+        listener = Firestore.firestore().collection("users").document(uid).collection("moods")
             .order(by: "date", descending: true)
-            .addSnapshotListener { snapshot, error in
+            .addSnapshotListener { [weak self] snapshot, error in
                 guard let docs = snapshot?.documents else { return }
-                self.moods = docs.compactMap { try? $0.data(as: MoodEntry.self) }
+                self?.moods = docs.compactMap { try? $0.data(as: MoodEntry.self) }
             }
     }
 
