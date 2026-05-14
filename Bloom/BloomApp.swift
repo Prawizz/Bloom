@@ -18,6 +18,7 @@ struct BloomApp: App {
 
     @State private var moodViewModel: MoodViewModel
     @State private var journalViewModel: JournalViewModel
+    @State private var isAuthenticated: Bool
 
     init() {
         if FirebaseApp.app() == nil {
@@ -25,14 +26,21 @@ struct BloomApp: App {
         }
         _moodViewModel = State(initialValue: MoodViewModel())
         _journalViewModel = State(initialValue: JournalViewModel())
+        _isAuthenticated = State(initialValue: Auth.auth().currentUser != nil)
         setupTabBarAppearance()
     }
 
     var body: some Scene {
         WindowGroup {
-            LoginView()
-                .environment(moodViewModel)
-                .environment(journalViewModel)
+            Group {
+                if isAuthenticated {
+                    MainTabView(onSignOut: { isAuthenticated = false })
+                } else {
+                    LoginView(onAuthenticate: { isAuthenticated = true })
+                }
+            }
+            .environment(moodViewModel)
+            .environment(journalViewModel)
         }
     }
 

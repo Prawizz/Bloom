@@ -1,12 +1,12 @@
 import SwiftUI
 
 struct LoginView: View {
+    var onAuthenticate: () -> Void = {}
     
     @State private var email = ""
     @State private var password = ""
     @State private var isLogin = true
     @State private var errorMessage = ""
-    @State private var isAuthenticated = false
     
     var body: some View {
         VStack(spacing: 25) {
@@ -65,16 +65,12 @@ struct LoginView: View {
             Spacer()
         }
         .padding()
-        .fullScreenCover(isPresented: $isAuthenticated) {
-            MainTabView(onSignOut: { isAuthenticated = false })
-        }
     }
-    
     
     func login() {
         AuthManager.shared.signIn(email: email, password: password) { success, error in
             if success {
-                isAuthenticated = true
+                onAuthenticate()
             } else {
                 errorMessage = error ?? "Login failed"
             }
@@ -84,7 +80,7 @@ struct LoginView: View {
     func register() {
         AuthManager.shared.signUp(email: email, password: password) { success, error in
             if success {
-                isAuthenticated = true
+                onAuthenticate()
             } else {
                 errorMessage = error ?? "Signup failed"
             }
