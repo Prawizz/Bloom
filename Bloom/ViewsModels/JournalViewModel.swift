@@ -6,6 +6,7 @@ import FirebaseAuth
 @Observable
 class JournalViewModel {
     var entries: [JournalEntry] = []
+    var errorMessage: String?
     private var listener: ListenerRegistration?
 
     private var userID: String? {
@@ -32,21 +33,33 @@ class JournalViewModel {
         listener = Firestore.firestore().collection("users").document(uid).collection("journals")
             .order(by: "date", descending: true)
             .addSnapshotListener { [weak self] snapshot, error in
+                if let error = error {
+                    self?.errorMessage = error.localizedDescription
+                    return
+                }
                 guard let docs = snapshot?.documents else { return }
                 self?.entries = docs.compactMap { try? $0.data(as: JournalEntry.self) }
             }
     }
 
     func addEntry(_ entry: JournalEntry) {
-        guard let uid = userID else { return }
+        guard let uid = userID else {
+            errorMessage = "Unable to save entry: not signed in."
+            return
+        }
 
         let day = Calendar.current.startOfDay(for: entry.date)
-        entries.removeAll { Calendar.current.isDate($0.date, inSameDayAs: day) }
-        entries.append(entry)
 
-        try? Firestore.firestore().collection("users").document(uid)
+        Firestore.firestore().collection("users").document(uid)
             .collection("journals").document(entry.id)
-            .setData(from: entry)
+            .setData(from: entry) { [weak self] error in
+                if let error = error {
+                    self?.errorMessage = error.localizedDescription
+                } else {
+                    self?.entries.removeAll { Calendar.current.isDate($0.date, inSameDayAs: day) }
+                    self?.entries.append(entry)
+                }
+            }
     }
 
     func deleteEntry(_ entry: JournalEntry) {

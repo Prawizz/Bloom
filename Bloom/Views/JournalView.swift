@@ -84,6 +84,7 @@ struct JournalView: View {
         .navigationTitle("Journal")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
+            journalViewModel.errorMessage = nil
             if let existingEntry = journalViewModel.entry(for: entryDate) {
                 notes = existingEntry.notes
                 flowerType = existingEntry.flowerType
@@ -91,6 +92,16 @@ struct JournalView: View {
                 sleepHours = existingEntry.sleepHours
                 steps = existingEntry.steps
             }
+        }
+        .alert("Unable to save entry", isPresented: Binding(
+            get: { journalViewModel.errorMessage != nil },
+            set: { if !$0 { journalViewModel.errorMessage = nil } }
+        )) {
+            Button("OK", role: .cancel) {
+                journalViewModel.errorMessage = nil
+            }
+        } message: {
+            Text(journalViewModel.errorMessage ?? "Unknown error")
         }
     }
 

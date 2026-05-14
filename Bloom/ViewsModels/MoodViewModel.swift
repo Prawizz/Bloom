@@ -6,6 +6,7 @@ import FirebaseAuth
 @Observable
 class MoodViewModel {
     var moods: [MoodEntry] = []
+    var errorMessage: String?
     private var listener: ListenerRegistration?
 
     private var userID: String? {
@@ -32,23 +33,34 @@ class MoodViewModel {
         listener = Firestore.firestore().collection("users").document(uid).collection("moods")
             .order(by: "date", descending: true)
             .addSnapshotListener { [weak self] snapshot, error in
+                if let error = error {
+                    self?.errorMessage = error.localizedDescription
+                    return
+                }
                 guard let docs = snapshot?.documents else { return }
                 self?.moods = docs.compactMap { try? $0.data(as: MoodEntry.self) }
             }
     }
 
     func setMood(_ mood: Int, for date: Date = Date()) {
-        guard let uid = userID else { return }
+        guard let uid = userID else {
+            errorMessage = "Unable to save mood: not signed in."
+            return
+        }
 
         let day = Calendar.current.startOfDay(for: date)
-        moods.removeAll { Calendar.current.isDate($0.date, inSameDayAs: day) }
-
         let entry = MoodEntry(date: day, mood: mood)
-        moods.append(entry)
 
-        try? Firestore.firestore().collection("users").document(uid)
+        Firestore.firestore().collection("users").document(uid)
             .collection("moods").document(entry.id)
-            .setData(from: entry)
+            .setData(from: entry) { [weak self] error in
+                if let error = error {
+                    self?.errorMessage = error.localizedDescription
+                } else {
+                    self?.moods.removeAll { Calendar.current.isDate($0.date, inSameDayAs: day) }
+                    self?.moods.append(entry)
+                }
+            }
     }
 
     func mood(for date: Date = Date()) -> Int? {
