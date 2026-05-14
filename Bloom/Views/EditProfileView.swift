@@ -2,8 +2,11 @@ import SwiftUI
 import FirebaseAuth
 
 struct EditProfileView: View {
+    var onProfileSaved: () -> Void = {}
+    
     @State private var displayName: String = ""
     @State private var isLoading = false
+    @State private var errorMessage: String?
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
@@ -29,6 +32,14 @@ struct EditProfileView: View {
                 displayName = user.displayName ?? ""
             }
         }
+        .alert("Unable to save profile", isPresented: Binding(
+            get: { errorMessage != nil },
+            set: { if !$0 { errorMessage = nil } }
+        )) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(errorMessage ?? "")
+        }
     }
     
     private func saveProfile() {
@@ -39,11 +50,14 @@ struct EditProfileView: View {
         changeRequest.displayName = displayName
         
         changeRequest.commitChanges { error in
-            isLoading = false
-            if let error = error {
-                print("Error updating profile: \(error.localizedDescription)")
-            } else {
-                dismiss()
+            DispatchQueue.main.async {
+                isLoading = false
+                if let error = error {
+                    errorMessage = error.localizedDescription
+                } else {
+                    onProfileSaved()
+                    dismiss()
+                }
             }
         }
     }

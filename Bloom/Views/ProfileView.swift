@@ -4,16 +4,14 @@ import FirebaseAuth
 struct ProfileView: View {
     var onSignOut: () -> Void = {}
     @State private var user: User? = Auth.auth().currentUser
-    
-    var body: some View {
-        NavigationStack {
+    @State private var showSignOutAlert = false
             VStack(spacing: 20) {
                 Text("Profile")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                 
                 // Profile Widget
-                NavigationLink(destination: EditProfileView()) {
+                NavigationLink(destination: EditProfileView(onProfileSaved: refreshUser)) {
                     HStack {
                         // Profile Picture
                         if let photoURL = user?.photoURL,
@@ -59,7 +57,9 @@ struct ProfileView: View {
                 Spacer()
                 
                 // Sign Out Button
-                Button(action: signOut) {
+                Button(action: {
+                    showSignOutAlert = true
+                }) {
                     Text("Sign Out")
                         .foregroundColor(.brown)
                         .frame(maxWidth: .infinity)
@@ -72,11 +72,23 @@ struct ProfileView: View {
             .navigationTitle("")
             .navigationBarHidden(true)
             .onAppear {
-                user = Auth.auth().currentUser
+                refreshUser()
+            }
+            .alert("Sign Out", isPresented: $showSignOutAlert) {
+                Button("Cancel", role: .cancel) {}
+                Button("Sign Out", role: .destructive) {
+                    signOut()
+                }
+            } message: {
+                Text("Are you sure you want to sign out?")
             }
         }
     }
     
+    private func refreshUser() {
+        user = Auth.auth().currentUser
+    }
+
     private func signOut() {
         AuthManager.shared.signOut()
         onSignOut()
