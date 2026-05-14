@@ -11,7 +11,7 @@ struct AnalysisView: View {
     var body: some View {
         VStack(spacing: 20) {
             
-            Text("Your Insights 🌿")
+            Text("Therapist Room 🌿")
                 .font(.title2)
                 .fontWeight(.semibold)
             

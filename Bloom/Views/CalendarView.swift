@@ -15,11 +15,10 @@ struct CalendarView: View {
     }
     
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 12) {
-                header
-                
-                HStack(spacing: 4) {
+        VStack(spacing: 12) {
+            header
+            
+            HStack(spacing: 4) {
                     ForEach(["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], id: \ .self) { weekday in
                         Text(weekday)
                             .font(.caption)
@@ -60,7 +59,6 @@ struct CalendarView: View {
                 Spacer()
             }
             .padding()
-            .navigationTitle("Calendar")
         }
     }
     
