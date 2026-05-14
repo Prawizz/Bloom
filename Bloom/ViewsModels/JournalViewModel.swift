@@ -50,7 +50,7 @@ class JournalViewModel {
 
         let day = Calendar.current.startOfDay(for: entry.date)
 
-        Firestore.firestore().collection("users").document(uid)
+        try? Firestore.firestore().collection("users").document(uid)
             .collection("journals").document(entry.id)
             .setData(from: entry) { [weak self] error in
                 if let error = error {

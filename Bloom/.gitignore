@@ -1,6 +1,7 @@
 # Secrets
 Secrets.xcconfig
 Secrets.plist
+Config.xcconfig
 
 # Firebase (optional but recommended)
 GoogleService-Info.plist

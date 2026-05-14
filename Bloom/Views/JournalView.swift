@@ -140,7 +140,3 @@ struct JournalView: View {
     }
 }
 
-#Preview {
-    JournalView(entryDate: Date())
-        .environment(JournalViewModel())
-}

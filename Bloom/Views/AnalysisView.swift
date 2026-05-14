@@ -1,36 +1,38 @@
 import SwiftUI
 
 struct AnalysisView: View {
-    
+
     @Environment(MoodViewModel.self) var moodViewModel
     @Environment(JournalViewModel.self) var journalViewModel
-    
+
     @State private var analysis: String = ""
     @State private var isLoading = false
-    
+
     var body: some View {
         VStack(spacing: 20) {
-            
+
             Text("Therapist Room 🌿")
                 .font(.title2)
                 .fontWeight(.semibold)
-            
+
             if isLoading {
                 ProgressView("Analyzing your moods...")
-            }
-            
-            else if !analysis.isEmpty {
-                Text(analysis)
-                    .padding()
-                    .background(Color("SoftPink").opacity(0.2))
-                    .cornerRadius(16)
-            }
-            
-            else {
+            } else if !analysis.isEmpty {
+                ScrollView {
+                    Text(analysis)
+                        .padding()
+                        .background(Color("SoftPink").opacity(0.2))
+                        .cornerRadius(16)
+                }
+            } else {
                 Text("No analysis yet")
                     .foregroundColor(.gray)
             }
-            
+
+            Text("Moods: \(moodViewModel.recentMoods.count) | Journals: \(journalViewModel.recentEntries.count)")
+                .font(.caption)
+                .foregroundColor(.secondary)
+
             Button {
                 generateAnalysis()
             } label: {
@@ -38,14 +40,12 @@ struct AnalysisView: View {
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(.borderedProminent)
-            
+
             Spacer()
         }
         .padding()
     }
-    
-    // MARK: - AI Function
-    
+
     func generateAnalysis() {
         isLoading = true
         analysis = ""
@@ -62,7 +62,7 @@ struct AnalysisView: View {
                 }
             } catch {
                 await MainActor.run {
-                    analysis = "Failed to analyze. Please try again."
+                    analysis = "Error: \(error.localizedDescription)"
                     isLoading = false
                 }
             }

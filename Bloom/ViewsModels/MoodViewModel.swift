@@ -51,7 +51,7 @@ class MoodViewModel {
         let day = Calendar.current.startOfDay(for: date)
         let entry = MoodEntry(date: day, mood: mood)
 
-        Firestore.firestore().collection("users").document(uid)
+        try? Firestore.firestore().collection("users").document(uid)
             .collection("moods").document(entry.id)
             .setData(from: entry) { [weak self] error in
                 if let error = error {

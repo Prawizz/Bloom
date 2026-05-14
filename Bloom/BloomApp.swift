@@ -1,5 +1,6 @@
 import SwiftUI
 import Firebase
+import FirebaseAuth
 import Observation
 
 class AppDelegate: NSObject, UIApplicationDelegate {
