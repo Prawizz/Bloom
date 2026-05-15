@@ -8,11 +8,11 @@ struct JournalView: View {
     @State private var sleepHours: Double = 8.0
     @State private var steps: Int = 0
     
+    // 👇 Custom design alert overlay state tracking variables
     @State private var showSavedAlert = false
     
     @Environment(\.dismiss) var dismiss
     @Environment(JournalViewModel.self) var journalViewModel
-    // 👇 FIX 1: ADD THE MISSING MOOD VIEW MODEL ENVIRONMENT HERE
     @Environment(MoodViewModel.self) var moodViewModel
 
     private let flowerOptions = ["rose", "tulip", "sunflower", "daisy", "lily"]
@@ -164,14 +164,70 @@ struct JournalView: View {
                 }
                 .padding(.horizontal)
             }
+            .blur(radius: showSavedAlert ? 5 : 0) // Softly blurs underlying fields when saving popped up
+            
+            // 👇 COZY CUSTOM DESIGN SAVED DIALOG OVERLAY BLOCK
+            if showSavedAlert {
+                ZStack {
+                    // Dark background dimming matte
+                    Color.black.opacity(0.25)
+                        .ignoresSafeArea()
+                        .onTapGesture {
+                            withAnimation { showSavedAlert = false; dismiss() }
+                        }
+                    
+                    // Alert Window Chassis
+                    VStack(spacing: 24) {
+                        // Dynamic Plant Decoration Node
+                        Image("\(flowerType)_\(mood)")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 90, height: 90)
+                            .padding(.top, 10)
+                        
+                        VStack(spacing: 8) {
+                            Text("Entry Saved!")
+                                .font(.custom("DarumadropOne-Regular", size: 30))
+                                .foregroundColor(textBrown)
+                            
+                            Text("Your garden is growing beautifully.")
+                                .font(.custom("DarumadropOne-Regular", size: 16))
+                                .foregroundColor(textBrown.opacity(0.7))
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal, 10)
+                        }
+                        
+                        // Custom Button Stylized Block
+                        Button(action: {
+                            withAnimation(.easeOut(duration: 0.15)) {
+                                showSavedAlert = false
+                                dismiss()
+                            }
+                        }) {
+                            Text("Yay!")
+                                .font(.custom("DarumadropOne-Regular", size: 20))
+                                .foregroundColor(.white)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 12)
+                                .background(textBrown)
+                                .cornerRadius(100)
+                                .shadow(color: textBrown.opacity(0.2), radius: 5, y: 3)
+                        }
+                    }
+                    .padding(30)
+                    .frame(width: 300)
+                    .background(
+                        RoundedRectangle(cornerRadius: 28)
+                            .fill(softBeige)
+                            .overlay(RoundedRectangle(cornerRadius: 28).stroke(textBrown.opacity(0.15), lineWidth: 2))
+                    )
+                    .shadow(color: Color.black.opacity(0.15), radius: 20, x: 0, y: 10)
+                    .transition(.scale.combined(with: .opacity)) // Smooth scale-pop effect animation setup
+                }
+            }
         }
         .navigationBarTitleDisplayMode(.inline)
         .onAppear { loadExistingEntry() }
-        .alert("Entry Saved!", isPresented: $showSavedAlert) {
-            Button("Yay!") { dismiss() }
-        } message: {
-            Text("Your garden is growing beautifully.")
-        }
     }
 
     @ViewBuilder
@@ -203,7 +259,6 @@ struct JournalView: View {
     }
 
     private func saveEntry() {
-        // Save to Journal Collection
         let entry = JournalEntry(
             date: entryDate,
             mood: mood,
@@ -213,10 +268,11 @@ struct JournalView: View {
             steps: steps
         )
         journalViewModel.addEntry(entry)
-        
-        // 👇 FIX 2: SAVE INTO THE MOOD COLLECTION AT THE SAME TIME
         moodViewModel.setMood(mood, for: entryDate)
         
-        showSavedAlert = true
+        // Triggers the custom animated overlay view framework instantly
+        withAnimation(.spring(response: 0.4, dampingFraction: 0.75)) {
+            showSavedAlert = true
+        }
     }
 }
