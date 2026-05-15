@@ -25,9 +25,7 @@
 		623BFE002F8755EB005C83AD /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623BFDFF2F8755EB005C83AD /* LoginView.swift */; };
 		62CA94432F8A0CA900B56479 /* JournalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CA94422F8A0C9D00B56479 /* JournalViewModel.swift */; };
 		62CA94532F9252F800B56479 /* LLMService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CA94522F9252F000B56479 /* LLMService.swift */; };
-		62CA94622F92768B00B56479 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 62CA94612F92768600B56479 /* .gitignore */; };
 		62CA94732F93762700B56479 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CA94722F93762300B56479 /* EditProfileView.swift */; };
-		62FB36B92FB68F7C0070C2B4 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 62FB36B82FB68F7C0070C2B4 /* Config.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,9 +66,7 @@
 		623BFDFF2F8755EB005C83AD /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		62CA94422F8A0C9D00B56479 /* JournalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalViewModel.swift; sourceTree = "<group>"; };
 		62CA94522F9252F000B56479 /* LLMService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMService.swift; sourceTree = "<group>"; };
-		62CA94612F92768600B56479 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		62CA94722F93762300B56479 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
-		62FB36B82FB68F7C0070C2B4 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -116,7 +112,6 @@
 		623BFD662F8004A8005C83AD = {
 			isa = PBXGroup;
 			children = (
-				62FB36B82FB68F7C0070C2B4 /* Config.xcconfig */,
 				623BFDC42F8008FF005C83AD /* Bloom */,
 				623BFD822F8004AA005C83AD /* BloomTests */,
 				623BFD8C2F8004AA005C83AD /* BloomUITests */,
@@ -145,13 +140,11 @@
 		623BFDC42F8008FF005C83AD /* Bloom */ = {
 			isa = PBXGroup;
 			children = (
-				62CA94612F92768600B56479 /* .gitignore */,
 				623BFDEC2F80610C005C83AD /* Bloom.entitlements */,
 				623BFDC92F800905005C83AD /* Models */,
 				623BFDCA2F800969005C83AD /* ViewsModels */,
 				623BFDCB2F800974005C83AD /* Views */,
 				623BFDCC2F80097F005C83AD /* Services */,
-				623BFDCD2F8009A3005C83AD /* Resources */,
 				623BFDC02F8008FF005C83AD /* Preview Content */,
 				623BFDC12F8008FF005C83AD /* Assets.xcassets */,
 				623BFDC22F8008FF005C83AD /* BloomApp.swift */,
@@ -199,13 +192,6 @@
 				623BFDFC2F8755C1005C83AD /* AuthManager.swift */,
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		623BFDCD2F8009A3005C83AD /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -330,7 +316,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				62CA94622F92768B00B56479 /* .gitignore in Resources */,
 				623BFDC72F8008FF005C83AD /* Preview Assets.xcassets in Resources */,
 				623BFDC82F8008FF005C83AD /* Assets.xcassets in Resources */,
 				623BFDF42F874A2E005C83AD /* GoogleService-Info.plist in Resources */,
@@ -341,7 +326,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				62FB36B92FB68F7C0070C2B4 /* Config.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -408,7 +392,6 @@
 /* Begin XCBuildConfiguration section */
 		623BFD912F8004AA005C83AD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 62FB36B82FB68F7C0070C2B4 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -472,7 +455,6 @@
 		};
 		623BFD922F8004AA005C83AD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 62FB36B82FB68F7C0070C2B4 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -529,7 +511,6 @@
 		};
 		623BFD942F8004AA005C83AD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 62FB36B82FB68F7C0070C2B4 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -563,7 +544,6 @@
 		};
 		623BFD952F8004AA005C83AD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 62FB36B82FB68F7C0070C2B4 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
