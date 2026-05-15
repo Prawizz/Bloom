@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		623BFDC52F8008FF005C83AD /* BloomApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623BFDC22F8008FF005C83AD /* BloomApp.swift */; };
 		623BFDC72F8008FF005C83AD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 623BFDBF2F8008FF005C83AD /* Preview Assets.xcassets */; };
-		623BFDC82F8008FF005C83AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 623BFDC12F8008FF005C83AD /* Assets.xcassets */; };
 		623BFDD12F8009EF005C83AD /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623BFDD02F8009EB005C83AD /* CalendarView.swift */; };
 		623BFDD32F8009F8005C83AD /* JournalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623BFDD22F8009F5005C83AD /* JournalView.swift */; };
 		623BFDD52F800A01005C83AD /* AnalysisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623BFDD42F8009FD005C83AD /* AnalysisView.swift */; };
@@ -50,7 +49,6 @@
 		623BFD7F2F8004AA005C83AD /* BloomTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BloomTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		623BFD892F8004AA005C83AD /* BloomUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BloomUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		623BFDBF2F8008FF005C83AD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		623BFDC12F8008FF005C83AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		623BFDC22F8008FF005C83AD /* BloomApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloomApp.swift; sourceTree = "<group>"; };
 		623BFDD02F8009EB005C83AD /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		623BFDD22F8009F5005C83AD /* JournalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalView.swift; sourceTree = "<group>"; };
@@ -78,6 +76,11 @@
 		623BFD8C2F8004AA005C83AD /* BloomUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = BloomUITests;
+			sourceTree = "<group>";
+		};
+		62FB37312FB7A2250070C2B4 /* Resources */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -140,13 +143,13 @@
 		623BFDC42F8008FF005C83AD /* Bloom */ = {
 			isa = PBXGroup;
 			children = (
+				62FB37312FB7A2250070C2B4 /* Resources */,
 				623BFDEC2F80610C005C83AD /* Bloom.entitlements */,
 				623BFDC92F800905005C83AD /* Models */,
 				623BFDCA2F800969005C83AD /* ViewsModels */,
 				623BFDCB2F800974005C83AD /* Views */,
 				623BFDCC2F80097F005C83AD /* Services */,
 				623BFDC02F8008FF005C83AD /* Preview Content */,
-				623BFDC12F8008FF005C83AD /* Assets.xcassets */,
 				623BFDC22F8008FF005C83AD /* BloomApp.swift */,
 				623BFDF32F874A2E005C83AD /* GoogleService-Info.plist */,
 			);
@@ -208,6 +211,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				62FB37312FB7A2250070C2B4 /* Resources */,
 			);
 			name = Bloom;
 			packageProductDependencies = (
@@ -317,7 +323,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				623BFDC72F8008FF005C83AD /* Preview Assets.xcassets in Resources */,
-				623BFDC82F8008FF005C83AD /* Assets.xcassets in Resources */,
 				623BFDF42F874A2E005C83AD /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

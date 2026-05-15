@@ -1,32 +1,49 @@
 import SwiftUI
 
 struct MainTabView: View {
-
+    
     var onSignOut: () -> Void = {}
     @State private var selectedPage = 0
     @State private var showProfile = false
     @Environment(MoodViewModel.self) var moodViewModel
     @Environment(JournalViewModel.self) var journalViewModel
-
+    
     private let pageTitles = ["Garden", "Therapist Room"]
-
+    
     var body: some View {
         NavigationStack {
-            VStack(spacing: 0) {
-                pagePicker
-
-                TabView(selection: $selectedPage) {
-                    CalendarView()
-                        .tag(0)
-
-                    AnalysisView()
-                        .tag(1)
+            ZStack {
+                Image("calendar_background")
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
+                    .opacity(selectedPage == 0 ? 1 : 0)
+                
+                Color(.systemBackground)
+                    .ignoresSafeArea()
+                    .opacity(selectedPage == 1 ? 1 : 0)
+                
+                // Content Layout
+                VStack(spacing: 0) {
+                    
+                    pagePicker
+                    
+                    TabView(selection: $selectedPage) {
+                        CalendarView()
+                            .tag(0)
+                        
+                        AnalysisView()
+                            .tag(1)
+                    }
+                    .tabViewStyle(.page(indexDisplayMode: .never))
+                    // 2. Allow the internal TabView gesture animation to drive the state smoothly
                 }
-                .tabViewStyle(.page(indexDisplayMode: .never))
-                .animation(.easeInOut, value: selectedPage)
+                .padding(.top, 50) // Tweaked slightly to prevent clashing with navigation bar
             }
+            // 3. Animate title transitions seamlessly
             .navigationTitle(pageTitles[selectedPage])
             .navigationBarTitleDisplayMode(.inline)
+            .animation(.easeInOut(duration: 0.3), value: selectedPage)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
@@ -50,12 +67,13 @@ struct MainTabView: View {
             journalViewModel.loadEntries()
         }
     }
-
+    
     private var pagePicker: some View {
         HStack(spacing: 12) {
             ForEach(0..<pageTitles.count, id: \.self) { index in
                 Button {
-                    withAnimation(.spring(response: 0.45, dampingFraction: 0.8)) {
+                    // 4. Clean up the spring animation for a responsive tap feel
+                    withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
                         selectedPage = index
                     }
                 } label: {
@@ -75,8 +93,4 @@ struct MainTabView: View {
         .padding(.top, 10)
         .padding(.bottom, 4)
     }
-}
-
-#Preview {
-    MainTabView()
 }
