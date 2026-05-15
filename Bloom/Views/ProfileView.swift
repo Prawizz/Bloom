@@ -5,74 +5,115 @@ struct ProfileView: View {
     var onSignOut: () -> Void = {}
     @State private var user: User? = Auth.auth().currentUser
     @State private var showSignOutAlert = false
+    
+    // 👇 Local tracking ID to instantly refresh the local image render state
+    @State private var localImageID = UUID().uuidString
+    
+    // Theme Colors
+    private let textBrown = Color(red: 0.4, green: 0.3, blue: 0.2)
+    private let softBeige = Color(red: 0.98, green: 0.96, blue: 0.92)
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: 20) {
-                Text("Profile")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
+            ZStack {
+                // Background Theme
+                softBeige.ignoresSafeArea()
+                
+                VStack(spacing: 0) {
+                    
+                    // HEADER
+                    Text("Profile")
+                        .font(.custom("DarumadropOne-Regular", size: 36))
+                        .foregroundColor(textBrown)
+                        .padding(.top, 40)
+                    
+                    Spacer()
 
-                // Profile Widget
-                NavigationLink(destination: EditProfileView(onProfileSaved: refreshUser)) {
-                    HStack {
-                        // Profile Picture
-                        if let photoURL = user?.photoURL,
-                        let url = URL(string: photoURL.absoluteString) {
-                            AsyncImage(url: url) { image in
-                                image.resizable()
-                                    .frame(width: 60, height: 60)
-                                    .clipShape(Circle())
-                            } placeholder: {
-                                Circle()
-                                    .fill(Color.gray.opacity(0.3))
-                                    .frame(width: 60, height: 60)
+                    // CENTERED PROFILE CARD
+                    VStack(spacing: 24) {
+                        
+                        // Profile Picture & Details Stack
+                        VStack(spacing: 16) {
+                            // Centered Profile Picture (Now pulling completely from Local Device Storage)
+                            Group {
+                                if let localImage = ProfileImageManager.loadLocalImage() {
+                                    localImage
+                                        .resizable()
+                                        .scaledToFill()
+                                } else {
+                                    // Default asset fallback
+                                    Image("user_logo")
+                                        .resizable()
+                                        .scaledToFill()
+                                }
                             }
-                        } else {
-                            Circle()
-                                .fill(Color("SoftPink"))
-                                .frame(width: 60, height: 60)
-                                .overlay(
-                                    Text(user?.email?.prefix(1).uppercased() ?? "?")
-                                        .foregroundColor(.white)
-                                        .font(.title)
-                                )
+                            .frame(width: 110, height: 110)
+                            .clipShape(Circle())
+                            .overlay(Circle().stroke(textBrown.opacity(0.15), lineWidth: 3))
+                            .shadow(color: Color.black.opacity(0.06), radius: 8, x: 0, y: 4)
+                            .id(localImageID) // 👈 Forces an instant layout redraw when user saves changes
+                            
+                            // User Information
+                            VStack(spacing: 6) {
+                                Text(user?.displayName ?? "Gardener")
+                                    .font(.custom("DarumadropOne-Regular", size: 26))
+                                    .foregroundColor(textBrown)
+                                
+                                Text(user?.email ?? "No Email Linked")
+                                    .font(.custom("DarumadropOne-Regular", size: 16))
+                                    .foregroundColor(textBrown.opacity(0.6))
+                            }
                         }
-
-                        VStack(alignment: .leading) {
-                            Text(user?.displayName ?? user?.email ?? "User")
-                                .font(.headline)
-                            Text("Tap to edit profile")
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
+                        
+                        // --- EXPLICIT EDIT PROFILE BUTTON ---
+                        NavigationLink(destination: EditProfileView(onProfileSaved: refreshUser)) {
+                            HStack(spacing: 8) {
+                                Image(systemName: "slider.horizontal.3")
+                                Text("Edit Profile")
+                            }
+                            .font(.custom("DarumadropOne-Regular", size: 16))
+                            .foregroundColor(textBrown)
+                            .padding(.vertical, 12)
+                            .padding(.horizontal, 24)
+                            .background(
+                                Capsule()
+                                    .fill(textBrown.opacity(0.08))
+                            )
                         }
-
-                        Spacer()
-
-                        Image(systemName: "chevron.right")
-                            .foregroundColor(.gray)
+                        .buttonStyle(PlainButtonStyle())
                     }
-                    .padding()
-                    .background(Color.gray.opacity(0.1))
-                    .cornerRadius(12)
-                }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 35)
+                    .padding(.horizontal, 20)
+                    .background(
+                        RoundedRectangle(cornerRadius: 28)
+                            .fill(Color.white.opacity(0.85))
+                            .shadow(color: Color.black.opacity(0.04), radius: 15, x: 0, y: 8)
+                    )
+                    .padding(.horizontal, 24)
 
-                Spacer()
+                    Spacer()
 
-                // Sign Out Button
-                Button(action: {
-                    showSignOutAlert = true
-                }) {
-                    Text("Sign Out")
-                        .foregroundColor(.brown)
+                    // SIGN OUT BUTTON (Bottom)
+                    Button(action: {
+                        showSignOutAlert = true
+                    }) {
+                        HStack(spacing: 8) {
+                            Image(systemName: "rectangle.portrait.and.arrow.right")
+                            Text("Sign Out")
+                        }
+                        .font(.custom("DarumadropOne-Regular", size: 20))
+                        .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.red.opacity(0.1))
-                        .cornerRadius(12)
+                        .background(textBrown.opacity(0.85))
+                        .cornerRadius(100)
+                        .padding(.horizontal, 40)
+                        .shadow(color: textBrown.opacity(0.2), radius: 10, y: 5)
+                    }
+                    .padding(.bottom, 40)
                 }
             }
-            .padding()
-            .navigationTitle("")
             .navigationBarHidden(true)
             .onAppear {
                 refreshUser()
@@ -83,13 +124,14 @@ struct ProfileView: View {
                     signOut()
                 }
             } message: {
-                Text("Are you sure you want to sign out?")
+                Text("Are you sure you want to leave the garden for now?")
             }
-        } 
+        }
     }
 
     private func refreshUser() {
         user = Auth.auth().currentUser
+        localImageID = UUID().uuidString // 👈 Updates identity tracker to wipe old view hierarchies instantly
     }
 
     private func signOut() {

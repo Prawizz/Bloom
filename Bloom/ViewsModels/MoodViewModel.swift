@@ -27,20 +27,23 @@ class MoodViewModel {
     }
 
     func loadMoods() {
-        guard let uid = userID else { return }
-        listener?.remove()
+            guard let uid = userID else { return }
+            listener?.remove()
 
-        listener = Firestore.firestore().collection("users").document(uid).collection("moods")
-            .order(by: "date", descending: true)
-            .addSnapshotListener { [weak self] snapshot, error in
-                if let error = error {
-                    self?.errorMessage = error.localizedDescription
-                    return
+            listener = Firestore.firestore().collection("users").document(uid).collection("moods")
+                .order(by: "date", descending: true)
+                .addSnapshotListener { [weak self] snapshot, error in
+                    // Switch updates over to the main thread securely
+                    DispatchQueue.main.async {
+                        if let error = error {
+                            self?.errorMessage = error.localizedDescription
+                            return
+                        }
+                        guard let docs = snapshot?.documents else { return }
+                        self?.moods = docs.compactMap { try? $0.data(as: MoodEntry.self) }
+                    }
                 }
-                guard let docs = snapshot?.documents else { return }
-                self?.moods = docs.compactMap { try? $0.data(as: MoodEntry.self) }
-            }
-    }
+        }
 
     func setMood(_ mood: Int, for date: Date = Date()) {
         guard let uid = userID else {

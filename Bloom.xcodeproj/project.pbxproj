@@ -25,6 +25,8 @@
 		62CA94432F8A0CA900B56479 /* JournalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CA94422F8A0C9D00B56479 /* JournalViewModel.swift */; };
 		62CA94532F9252F800B56479 /* LLMService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CA94522F9252F000B56479 /* LLMService.swift */; };
 		62CA94732F93762700B56479 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CA94722F93762300B56479 /* EditProfileView.swift */; };
+		62FB37482FB7D9B80070C2B4 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 62FB37472FB7D9B80070C2B4 /* FirebaseStorage */; };
+		62FB374A2FB7DBED0070C2B4 /* ProfileImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FB37492FB7DBEB0070C2B4 /* ProfileImageManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +67,7 @@
 		62CA94422F8A0C9D00B56479 /* JournalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalViewModel.swift; sourceTree = "<group>"; };
 		62CA94522F9252F000B56479 /* LLMService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMService.swift; sourceTree = "<group>"; };
 		62CA94722F93762300B56479 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
+		62FB37492FB7DBEB0070C2B4 /* ProfileImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -92,6 +95,7 @@
 			files = (
 				623BFDF72F874BAE005C83AD /* FirebaseAuth in Frameworks */,
 				623BFDF92F874BAE005C83AD /* FirebaseFirestore in Frameworks */,
+				62FB37482FB7D9B80070C2B4 /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,6 +122,7 @@
 				623BFDC42F8008FF005C83AD /* Bloom */,
 				623BFD822F8004AA005C83AD /* BloomTests */,
 				623BFD8C2F8004AA005C83AD /* BloomUITests */,
+				62FB37462FB7D9B80070C2B4 /* Frameworks */,
 				623BFD702F8004A9005C83AD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -191,10 +196,18 @@
 		623BFDCC2F80097F005C83AD /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				62FB37492FB7DBEB0070C2B4 /* ProfileImageManager.swift */,
 				62CA94522F9252F000B56479 /* LLMService.swift */,
 				623BFDFC2F8755C1005C83AD /* AuthManager.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		62FB37462FB7D9B80070C2B4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -219,6 +232,7 @@
 			packageProductDependencies = (
 				623BFDF62F874BAE005C83AD /* FirebaseAuth */,
 				623BFDF82F874BAE005C83AD /* FirebaseFirestore */,
+				62FB37472FB7D9B80070C2B4 /* FirebaseStorage */,
 			);
 			productName = Bloom;
 			productReference = 623BFD6F2F8004A9005C83AD /* Bloom.app */;
@@ -353,6 +367,7 @@
 				623BFDC52F8008FF005C83AD /* BloomApp.swift in Sources */,
 				623BFDD52F800A01005C83AD /* AnalysisView.swift in Sources */,
 				623BFDE12F8058F9005C83AD /* CustomNavbar.swift in Sources */,
+				62FB374A2FB7DBED0070C2B4 /* ProfileImageManager.swift in Sources */,
 				623BFDD32F8009F8005C83AD /* JournalView.swift in Sources */,
 				623BFDD92F800B38005C83AD /* MainTabView.swift in Sources */,
 				623BFDE32F805F4D005C83AD /* MoodEntry.swift in Sources */,
@@ -710,6 +725,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 623BFDF52F874BAE005C83AD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		62FB37472FB7D9B80070C2B4 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 623BFDF52F874BAE005C83AD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -12,6 +12,8 @@ struct JournalView: View {
     
     @Environment(\.dismiss) var dismiss
     @Environment(JournalViewModel.self) var journalViewModel
+    // 👇 FIX 1: ADD THE MISSING MOOD VIEW MODEL ENVIRONMENT HERE
+    @Environment(MoodViewModel.self) var moodViewModel
 
     private let flowerOptions = ["rose", "tulip", "sunflower", "daisy", "lily"]
     
@@ -28,7 +30,6 @@ struct JournalView: View {
 
     var body: some View {
         ZStack {
-            // Background Theme
             softBeige.ignoresSafeArea()
             
             ScrollView {
@@ -45,7 +46,7 @@ struct JournalView: View {
                     }
                     .padding(.top, 20)
 
-                    // SECTION 1: VISUAL FLOWER PICKER (FIXED LENGTH ISSUE)
+                    // SECTION 1: VISUAL FLOWER PICKER
                     VStack(alignment: .leading, spacing: 10) {
                         Label("SELECT SEEDS", systemImage: "leaf.fill")
                             .font(.custom("DarumadropOne-Regular", size: 16))
@@ -54,7 +55,7 @@ struct JournalView: View {
                         HStack(spacing: 8) {
                             ForEach(flowerOptions, id: \.self) { flower in
                                 VStack(spacing: 4) {
-                                    Image("\(flower)_5") // Uses the grown version as icon
+                                    Image("\(flower)_5")
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 35, height: 35)
@@ -202,6 +203,7 @@ struct JournalView: View {
     }
 
     private func saveEntry() {
+        // Save to Journal Collection
         let entry = JournalEntry(
             date: entryDate,
             mood: mood,
@@ -211,6 +213,10 @@ struct JournalView: View {
             steps: steps
         )
         journalViewModel.addEntry(entry)
+        
+        // 👇 FIX 2: SAVE INTO THE MOOD COLLECTION AT THE SAME TIME
+        moodViewModel.setMood(mood, for: entryDate)
+        
         showSavedAlert = true
     }
 }

@@ -1,10 +1,15 @@
 import SwiftUI
+import FirebaseAuth
 
 struct MainTabView: View {
     
     var onSignOut: () -> Void = {}
     @State private var selectedPage = 0
     @State private var showProfile = false
+    
+    // 👇 Local tracking ID that forces an instant layout refresh without network lag
+    @State private var profileChangeID = UUID().uuidString
+    
     @Environment(MoodViewModel.self) var moodViewModel
     @Environment(JournalViewModel.self) var journalViewModel
     
@@ -30,7 +35,8 @@ struct MainTabView: View {
                 // Content Layout
                 VStack(spacing: 0) {
                     
-                    pagePicker
+                    // Unified Header Control
+                    customHeaderBlock
                     
                     TabView(selection: $selectedPage) {
                         CalendarView()
@@ -41,62 +47,79 @@ struct MainTabView: View {
                     }
                     .tabViewStyle(.page(indexDisplayMode: .never))
                 }
-                .padding(.top, 50)
+                // Keeps content safely underneath the notch/status bar area
+                .ignoresSafeArea(.container, edges: .bottom)
             }
-            .navigationTitle(pageTitles[selectedPage])
-            .navigationBarTitleDisplayMode(.inline)
-            .animation(.easeInOut(duration: 0.3), value: selectedPage)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        showProfile = true
-                    } label: {
-                        // --- CUSTOM USER LOGO ---
-                        Image("user_logo")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 35, height: 35) // Perfect size for a top bar
-                            .clipShape(Circle()) // Makes it circular
-                            .overlay(Circle().stroke(Color.white, lineWidth: 2)) // Adds a clean white border
-                            .shadow(radius: 3)
-                    }
-                }
-            }
-            .sheet(isPresented: $showProfile) {
+            .toolbar(.hidden, for: .navigationBar) // Completely disables the clashing native bar
+            .sheet(isPresented: $showProfile, onDismiss: {
+                // 👇 Refresh the local view ID the exact moment the sheet slides away
+                profileChangeID = UUID().uuidString
+            }) {
                 ProfileView(onSignOut: {
                     showProfile = false
                     onSignOut()
-                })
+                }) // 👈 Removed the extra parameter that was causing your compiler error
             }
         }
         .onAppear {
             moodViewModel.loadMoods()
             journalViewModel.loadEntries()
+            profileChangeID = UUID().uuidString // Ensure local verification on launch
         }
     }
     
-    private var pagePicker: some View {
-        HStack(spacing: 12) {
-            ForEach(0..<pageTitles.count, id: \.self) { index in
-                Button {
-                    withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
-                        selectedPage = index
+    // Custom Header
+    private var customHeaderBlock: some View {
+        HStack(alignment: .center, spacing: 12) {
+            
+            // Integrated Page Picker Layout
+            HStack(spacing: 8) {
+                ForEach(0..<pageTitles.count, id: \.self) { index in
+                    Button {
+                        withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
+                            selectedPage = index
+                        }
+                    } label: {
+                        Text(pageTitles[index])
+                            .font(.subheadline).bold()
+                            .foregroundColor(selectedPage == index ? .white : .primary)
+                            .padding(.vertical, 10)
+                            .frame(maxWidth: .infinity)
+                            .background(
+                                Capsule()
+                                    .fill(selectedPage == index ? Color.brown : Color(.systemGray5).opacity(0.8))
+                            )
                     }
-                } label: {
-                    Text(pageTitles[index])
-                        .font(.subheadline).bold()
-                        .foregroundColor(selectedPage == index ? .white : .primary)
-                        .padding(.vertical, 10)
-                        .frame(maxWidth: .infinity)
-                        .background(
-                            Capsule()
-                                .fill(selectedPage == index ? Color.brown : Color(.systemGray5))
-                        )
                 }
             }
+            
+            // Profile Button (Now loads 100% locally with zero latency)
+            Button {
+                showProfile = true
+            } label: {
+                Group {
+                    if let localImage = ProfileImageManager.loadLocalImage() {
+                        localImage
+                            .resizable()
+                            .scaledToFill()
+                    } else {
+                        // Standard fallback asset if no custom avatar photo on disk exists
+                        Image("user_logo")
+                            .resizable()
+                            .scaledToFill()
+                    }
+                }
+                .frame(width: 40, height: 40)
+                .clipShape(Circle())
+                .overlay(Circle().stroke(Color.white, lineWidth: 2))
+                .shadow(color: Color.black.opacity(0.15), radius: 4, x: 0, y: 2)
+            }
+            .id(profileChangeID) // 👈 Tells SwiftUI to explicitly redraw this layout block when id shifts
         }
         .padding(.horizontal)
-        .padding(.top, 10)
-        .padding(.bottom, 4)
+        // --- ADJUST THIS PADDING TO SHIFT IT DOWN ---
+        // 15-20pt is usually the sweet spot below the system status bar.
+        .padding(.top, 50)
+        .padding(.bottom, 12)
     }
 }
