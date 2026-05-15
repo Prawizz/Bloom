@@ -13,13 +13,17 @@ struct MainTabView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+                // 1. Garden Background
                 Image("calendar_background")
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea()
                     .opacity(selectedPage == 0 ? 1 : 0)
                 
-                Color(.systemBackground)
+                // 2. Therapist Room Background
+                Image("analysis_background")
+                    .resizable()
+                    .scaledToFill()
                     .ignoresSafeArea()
                     .opacity(selectedPage == 1 ? 1 : 0)
                 
@@ -36,11 +40,9 @@ struct MainTabView: View {
                             .tag(1)
                     }
                     .tabViewStyle(.page(indexDisplayMode: .never))
-                    // 2. Allow the internal TabView gesture animation to drive the state smoothly
                 }
-                .padding(.top, 50) // Tweaked slightly to prevent clashing with navigation bar
+                .padding(.top, 50)
             }
-            // 3. Animate title transitions seamlessly
             .navigationTitle(pageTitles[selectedPage])
             .navigationBarTitleDisplayMode(.inline)
             .animation(.easeInOut(duration: 0.3), value: selectedPage)
@@ -49,9 +51,14 @@ struct MainTabView: View {
                     Button {
                         showProfile = true
                     } label: {
-                        Image(systemName: "person.crop.circle")
-                            .font(.title2)
-                            .foregroundColor(.primary)
+                        // --- CUSTOM USER LOGO ---
+                        Image("user_logo")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 35, height: 35) // Perfect size for a top bar
+                            .clipShape(Circle()) // Makes it circular
+                            .overlay(Circle().stroke(Color.white, lineWidth: 2)) // Adds a clean white border
+                            .shadow(radius: 3)
                     }
                 }
             }
@@ -72,7 +79,6 @@ struct MainTabView: View {
         HStack(spacing: 12) {
             ForEach(0..<pageTitles.count, id: \.self) { index in
                 Button {
-                    // 4. Clean up the spring animation for a responsive tap feel
                     withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
                         selectedPage = index
                     }
@@ -84,7 +90,7 @@ struct MainTabView: View {
                         .frame(maxWidth: .infinity)
                         .background(
                             Capsule()
-                                .fill(selectedPage == index ? Color("SoftPink") : Color(.systemGray5))
+                                .fill(selectedPage == index ? Color.brown : Color(.systemGray5))
                         )
                 }
             }
