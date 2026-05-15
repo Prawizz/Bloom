@@ -15,50 +15,52 @@ struct CalendarView: View {
     }
 
     var body: some View {
-        VStack(spacing: 12) {
-            header
+        NavigationStack {
+            VStack(spacing: 12) {
+                header
 
-            HStack(spacing: 4) {
-                ForEach(["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], id: \.self) { weekday in
-                    Text(weekday)
-                        .font(.caption)
-                        .fontWeight(.semibold)
-                        .frame(maxWidth: .infinity)
-                }
-            }
-
-            LazyVGrid(columns: columns, spacing: 8) {
-                ForEach(datesForMonth().indices, id: \.self) { index in
-                    let maybeDate = datesForMonth()[index]
-
-                    if let date = maybeDate {
-                        NavigationLink(destination: JournalView(entryDate: date)) {
-                            ZStack {
-                                Circle()
-                                    .fill(isToday(date) ? Color.blue.opacity(0.25) : Color.gray.opacity(0.1))
-                                    .frame(width: 44, height: 44)
-
-                                if let entry = journalViewModel.entry(for: date) {
-                                    Text(flowerEmoji(for: entry.flowerType, mood: entry.mood))
-                                        .font(.title)
-                                } else {
-                                    Text(dayNumber(from: date))
-                                        .foregroundColor(calendar.isDate(date, equalTo: firstOfMonth(), toGranularity: .month) ? .primary : .secondary)
-                                }
-                            }
-                        }
-                        .buttonStyle(.plain)
-                    } else {
-                        Color.clear
-                            .frame(width: 44, height: 44)
+                HStack(spacing: 4) {
+                    ForEach(["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], id: \.self) { weekday in
+                        Text(weekday)
+                            .font(.caption)
+                            .fontWeight(.semibold)
+                            .frame(maxWidth: .infinity)
                     }
                 }
-            }
-            .animation(.easeInOut, value: currentMonth)
 
-            Spacer()
-        }
-        .padding()
+                LazyVGrid(columns: columns, spacing: 8) {
+                    ForEach(datesForMonth().indices, id: \.self) { index in
+                        let maybeDate = datesForMonth()[index]
+
+                        if let date = maybeDate {
+                            NavigationLink(destination: JournalView(entryDate: date)) {
+                                ZStack {
+                                    Circle()
+                                        .fill(isToday(date) ? Color.blue.opacity(0.25) : Color.gray.opacity(0.1))
+                                        .frame(width: 44, height: 44)
+
+                                    if let entry = journalViewModel.entry(for: date) {
+                                        Text(flowerEmoji(for: entry.flowerType, mood: entry.mood))
+                                            .font(.title)
+                                    } else {
+                                        Text(dayNumber(from: date))
+                                            .foregroundColor(calendar.isDate(date, equalTo: firstOfMonth(), toGranularity: .month) ? .primary : .secondary)
+                                    }
+                                }
+                            }
+                            .buttonStyle(.plain)
+                        } else {
+                            Color.clear
+                                .frame(width: 44, height: 44)
+                        }
+                    }
+                }
+                .animation(.easeInOut, value: currentMonth)
+
+                Spacer()
+            }
+            .padding()
+        } 
     }
 
     private var header: some View {

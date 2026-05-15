@@ -7,83 +7,85 @@ struct ProfileView: View {
     @State private var showSignOutAlert = false
 
     var body: some View {
-        VStack(spacing: 20) {
-            Text("Profile")
-                .font(.largeTitle)
-                .fontWeight(.bold)
+        NavigationStack {
+            VStack(spacing: 20) {
+                Text("Profile")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
 
-            // Profile Widget
-            NavigationLink(destination: EditProfileView(onProfileSaved: refreshUser)) {
-                HStack {
-                    // Profile Picture
-                    if let photoURL = user?.photoURL,
-                       let url = URL(string: photoURL.absoluteString) {
-                        AsyncImage(url: url) { image in
-                            image.resizable()
-                                .frame(width: 60, height: 60)
-                                .clipShape(Circle())
-                        } placeholder: {
+                // Profile Widget
+                NavigationLink(destination: EditProfileView(onProfileSaved: refreshUser)) {
+                    HStack {
+                        // Profile Picture
+                        if let photoURL = user?.photoURL,
+                        let url = URL(string: photoURL.absoluteString) {
+                            AsyncImage(url: url) { image in
+                                image.resizable()
+                                    .frame(width: 60, height: 60)
+                                    .clipShape(Circle())
+                            } placeholder: {
+                                Circle()
+                                    .fill(Color.gray.opacity(0.3))
+                                    .frame(width: 60, height: 60)
+                            }
+                        } else {
                             Circle()
-                                .fill(Color.gray.opacity(0.3))
+                                .fill(Color("SoftPink"))
                                 .frame(width: 60, height: 60)
+                                .overlay(
+                                    Text(user?.email?.prefix(1).uppercased() ?? "?")
+                                        .foregroundColor(.white)
+                                        .font(.title)
+                                )
                         }
-                    } else {
-                        Circle()
-                            .fill(Color("SoftPink"))
-                            .frame(width: 60, height: 60)
-                            .overlay(
-                                Text(user?.email?.prefix(1).uppercased() ?? "?")
-                                    .foregroundColor(.white)
-                                    .font(.title)
-                            )
-                    }
 
-                    VStack(alignment: .leading) {
-                        Text(user?.displayName ?? user?.email ?? "User")
-                            .font(.headline)
-                        Text("Tap to edit profile")
-                            .font(.subheadline)
+                        VStack(alignment: .leading) {
+                            Text(user?.displayName ?? user?.email ?? "User")
+                                .font(.headline)
+                            Text("Tap to edit profile")
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                        }
+
+                        Spacer()
+
+                        Image(systemName: "chevron.right")
                             .foregroundColor(.gray)
                     }
-
-                    Spacer()
-
-                    Image(systemName: "chevron.right")
-                        .foregroundColor(.gray)
-                }
-                .padding()
-                .background(Color.gray.opacity(0.1))
-                .cornerRadius(12)
-            }
-
-            Spacer()
-
-            // Sign Out Button
-            Button(action: {
-                showSignOutAlert = true
-            }) {
-                Text("Sign Out")
-                    .foregroundColor(.brown)
-                    .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Color.red.opacity(0.1))
+                    .background(Color.gray.opacity(0.1))
                     .cornerRadius(12)
+                }
+
+                Spacer()
+
+                // Sign Out Button
+                Button(action: {
+                    showSignOutAlert = true
+                }) {
+                    Text("Sign Out")
+                        .foregroundColor(.brown)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.red.opacity(0.1))
+                        .cornerRadius(12)
+                }
             }
-        }
-        .padding()
-        .navigationTitle("")
-        .navigationBarHidden(true)
-        .onAppear {
-            refreshUser()
-        }
-        .alert("Sign Out", isPresented: $showSignOutAlert) {
-            Button("Cancel", role: .cancel) {}
-            Button("Sign Out", role: .destructive) {
-                signOut()
+            .padding()
+            .navigationTitle("")
+            .navigationBarHidden(true)
+            .onAppear {
+                refreshUser()
             }
-        } message: {
-            Text("Are you sure you want to sign out?")
-        }
+            .alert("Sign Out", isPresented: $showSignOutAlert) {
+                Button("Cancel", role: .cancel) {}
+                Button("Sign Out", role: .destructive) {
+                    signOut()
+                }
+            } message: {
+                Text("Are you sure you want to sign out?")
+            }
+        } 
     }
 
     private func refreshUser() {
