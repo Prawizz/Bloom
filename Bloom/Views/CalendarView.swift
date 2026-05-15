@@ -6,10 +6,7 @@ struct CalendarView: View {
     @Environment(JournalViewModel.self) var journalViewModel
 
     private let calendar: Calendar = {
-        var cal = Calendar.current
-        // If you want to force Gregorian (2026) instead of Buddhist (2569),
-        // uncomment the line below:
-        // cal.identifier = .gregorian
+        var cal = Calendar(identifier: .gregorian)
         return cal
     }()
     
@@ -17,28 +14,32 @@ struct CalendarView: View {
 
     init() {
         let today = Date()
-        _currentMonth = State(initialValue: Calendar.current.component(.month, from: today))
-        _currentYear = State(initialValue: Calendar.current.component(.year, from: today))
+        let cal = Calendar(identifier: .gregorian)
+        _currentMonth = State(initialValue: cal.component(.month, from: today))
+        _currentYear = State(initialValue: cal.component(.year, from: today))
     }
 
     var body: some View {
         VStack(spacing: 20) {
             header
+                .padding(.top, 10)
             
             // Weekday Labels
             HStack(spacing: 0) {
                 ForEach(["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"], id: \.self) { weekday in
                     Text(weekday)
                         .font(.custom("DarumadropOne-Regular", size: 20))
-                        .foregroundColor(Color(red: 0.4, green: 0.3, blue: 0.2)) // Brownish text
+                        .padding(.vertical, 5)
+                        .foregroundColor(Color(red: 0.4, green: 0.3, blue: 0.2))
                         .frame(maxWidth: .infinity)
-                    
                 }
             }
 
+            let monthDates = datesForMonth()
+
             LazyVGrid(columns: columns, spacing: 15) {
-                ForEach(datesForMonth().indices, id: \.self) { index in
-                    if let date = datesForMonth()[index] {
+                ForEach(monthDates.indices, id: \.self) { index in
+                    if let date = monthDates[index] {
                         dateCell(for: date)
                     } else {
                         Color.clear.frame(height: 60)
@@ -52,27 +53,40 @@ struct CalendarView: View {
         .padding(.horizontal)
     }
 
-    // MARK: - Date Cell (The Image Part)
+    // MARK: - Strict Replacement Logic
     @ViewBuilder
     private func dateCell(for date: Date) -> some View {
         let day = calendar.component(.day, from: date)
         
+        // We only consider it a record if an entry exists AND mood is set
+        let entry = journalViewModel.entry(for: date)
+        let hasValidEntry = entry != nil && (entry?.mood ?? 0 > 0)
+        
         NavigationLink(destination: JournalView(entryDate: date)) {
             VStack {
-                ZStack {
-                    // 1. Your custom background image (1-31)
-                    // Ensure your assets are named "1", "2", "3"...
+                if hasValidEntry, let safeEntry = entry {
+                    // --- PATH A: ENTRY EXISTS (REPLACE NUMBER) ---
+                    ZStack {
+                        // Show the background WITHOUT a number
+                        Image("grass_base")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 50, height: 50)
+                        
+                        // Show the flower on top of the plain background
+                        Image("\(safeEntry.flowerType)_\(safeEntry.mood)")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 45, height: 45)
+                            .offset(y: -5)
+                    }
+                } else {
+                    // --- PATH B: NO ENTRY (SHOW NUMBER TILE) ---
+                    // Because this is in an 'else', Path A is completely ignored.
                     Image("\(day)")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 50, height: 50)
-                    
-                    // 2. Overlay the flower/emoji if an entry exists
-                    if let entry = journalViewModel.entry(for: date) {
-                        Text(flowerEmoji(for: entry.flowerType, mood: entry.mood))
-                            .font(.system(size: 25))
-                            .offset(y: -5) // Adjust based on your image design
-                    }
                 }
             }
         }
@@ -90,9 +104,9 @@ struct CalendarView: View {
 
             Spacer()
 
-            // FIX: Removed comma from year
-            Text("\(monthName()) \(String(currentYear))")
+            Text("\(monthName()) \(currentYear > 2500 ? String(currentYear - 543) : String(currentYear))")
                 .font(.custom("DarumadropOne-Regular", size: 28))
+                .padding(.vertical, 5)
                 .foregroundColor(Color(red: 0.4, green: 0.3, blue: 0.2))
 
             Spacer()
@@ -106,9 +120,10 @@ struct CalendarView: View {
         .padding(.horizontal, 20)
     }
 
-    // MARK: - Helpers (Keep your existing helper functions below)
+    // MARK: - Helpers
     private func monthName() -> String {
         let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .gregorian)
         formatter.dateFormat = "MMMM"
         return formatter.monthSymbols[currentMonth - 1]
     }
@@ -123,6 +138,7 @@ struct CalendarView: View {
         let weekday = calendar.component(.weekday, from: firstDay)
         let dayOffset = weekday - 1
         guard let daysInMonth = calendar.range(of: .day, in: .month, for: firstDay)?.count else { return [] }
+        
         var result: [Date?] = Array(repeating: nil, count: dayOffset)
         for day in 1...daysInMonth {
             if let date = calendar.date(from: DateComponents(year: currentYear, month: currentMonth, day: day)) {
@@ -141,11 +157,5 @@ struct CalendarView: View {
     private func nextMonth() {
         if currentMonth == 12 { currentMonth = 1; currentYear += 1 }
         else { currentMonth += 1 }
-    }
-    
-    private func flowerEmoji(for flowerType: String, mood: Int) -> String {
-        // Your existing emoji logic...
-        let baseEmoji = flowerType == "rose" ? "🌹" : "🌱"
-        return mood >= 4 ? baseEmoji : "🥀"
     }
 }
